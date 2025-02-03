@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="movie-title">Ibisobanuro by'Filime</title>
+    <title id="movie-title">Movie Details</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -273,7 +273,7 @@
 
     <div class="content">
         <div class="movie-details">
-            <img id="poster" src="" alt="Ishusho ya Filime">
+            <img id="poster" src="" alt="Movie Poster">
             <div class="movie-info-wrapper">
                 <div class="movie-stats">
                     <p><strong>Impuzandengo y'itora:</strong> <span id="vote-average"></span></p>
@@ -288,7 +288,6 @@
                     <p id="overview"></p>
                     <a href="index.html" class="back-button">Gusubira muri filime</a>
                     <button class="trailer-button" id="trailer-button">Reba Trailer</button>
-                </div>
             </div>
         </div>
 
@@ -307,8 +306,8 @@
     </div>
 
     <footer>
-        <p>&copy; 2025 KINAFLIX | by btem | Uburenganzira bwose burabitswe.</p>
-        <p>Dukurikirane kuri <a href="https://www.instagram.com" style="color: #e50914;">Instagram</a></p>
+        <p>&copy; 2025 KINAFLIX | by btem | All Rights Reserved.</p>
+        <p>Follow us on <a href="https://www.instagram.com" style="color: #e50914;">Instagram</a></p>
     </footer>
 
     <script>
@@ -317,7 +316,7 @@
 
         async function fetchMovieDetails(id) {
             const apiKey = 'aa3d6961efc3b487425daf0ec9f464f0';
-            const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=rw`);
+            const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US`);
             const movie = await response.json();
             displayMovieDetails(movie);
             displayMovieStats(movie);
@@ -342,7 +341,7 @@
 
         async function fetchActors(id) {
             const apiKey = 'aa3d6961efc3b487425daf0ec9f464f0';
-            const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${apiKey}&language=rw`);
+            const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${apiKey}&language=en-US`);
             const data = await response.json();
             displayActors(data.cast);
         }
@@ -364,7 +363,7 @@
 
         async function fetchTrailer(id) {
             const apiKey = 'aa3d6961efc3b487425daf0ec9f464f0';
-            const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}&language=rw`);
+            const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}&language=en-US`);
             const data = await response.json();
             const trailer = data.results.find(video => video.type === 'Trailer');
 
@@ -372,7 +371,7 @@
                 document.getElementById('trailer').src = `https://www.youtube.com/embed/${trailer.key}`;
                 document.getElementById('trailerModal').style.display = 'block';
             } else {
-                alert('Trailer ntihari');
+                alert('Trailer not available');
             }
         }
 
