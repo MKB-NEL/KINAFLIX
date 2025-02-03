@@ -140,6 +140,10 @@
             font-size: 1rem;
             margin-top: 5px;
             text-align: center;
+            font-family: 'Comfortaa', sans-serif;
+            font-weight: 500;
+            color: white;
+            text-decoration: none;
         }
 
         .search-bar-wrapper {
@@ -255,6 +259,61 @@
         .search-results .movie-box {
             max-width: 120px;
         }
+
+        /* Responsive Styles */
+        @media (max-width: 600px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .logo {
+                margin-bottom: 10px;
+            }
+
+            .new-releases-slider {
+                height: 300px;
+            }
+
+            .swiper-slide img {
+                height: auto;
+            }
+
+            .movie-info {
+                bottom: 10px;
+                left: 10px;
+            }
+
+            .movie-title {
+                font-size: 1.5rem;
+            }
+
+            .movie-description, .movie-rating {
+                font-size: 0.9rem;
+            }
+
+            .movie-row {
+                gap: 5px;
+            }
+
+            .movie-box {
+                min-width: 100px;
+                max-width: 100px;
+            }
+
+            .movie-box .movie-title {
+                font-size: 0.9rem;
+            }
+
+            .search-container input[type="text"] {
+                width: 100%;
+                max-width: 200px;
+            }
+
+            .search-results .movie-box {
+                max-width: 100px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -316,7 +375,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 KINAFLIX |by btem| All Rights Reserved.</p>
+            <p>&copy; 2025 KINAFLIX | by btem | uburenganzira bwose burabitswe.</p>
         </div>
     </footer>
 
@@ -335,8 +394,10 @@
                 const movieBox = document.createElement("div");
                 movieBox.classList.add("movie-box");
                 movieBox.innerHTML = `
-                    <img src="${movie.poster_path ? "https://image.tmdb.org/t/p/w500" + movie.poster_path : "https://via.placeholder.com/150"}" alt="${movie.title}">
-                    <div class="movie-title">${movie.title}</div>
+                    <a href="view.html?id=${movie.id}">
+                        <img src="${movie.poster_path ? "https://image.tmdb.org/t/p/w500" + movie.poster_path : "https://via.placeholder.com/150"}" alt="${movie.title}">
+                        <div class="movie-title">${movie.title}</div>
+                    </a>
                 `;
                 container.appendChild(movieBox);
             });
@@ -401,8 +462,10 @@
                 const movieBox = document.createElement("div");
                 movieBox.classList.add("movie-box");
                 movieBox.innerHTML = `
-                    <img src="${movie.poster_path ? "https://image.tmdb.org/t/p/w500" + movie.poster_path : "https://via.placeholder.com/150"}" alt="${movie.title}">
-                    <div class="movie-title">${movie.title}</div>
+                    <a href="view.html?id=${movie.id}">
+                        <img src="${movie.poster_path ? "https://image.tmdb.org/t/p/w500" + movie.poster_path : "https://via.placeholder.com/150"}" alt="${movie.title}">
+                        <div class="movie-title">${movie.title}</div>
+                    </a>
                 `;
                 container.appendChild(movieBox);
             });
@@ -412,6 +475,16 @@
         fetchTrendingMovies();
         fetchNewReleasedMovies(); // Fetch new released movies for "Ibishya byagezeho"
         fetchTopRatedMovies();
+
+        // Disable right-click context menu
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // Disable F12 key (Developer Tools)
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'F12') {
+                event.preventDefault();
+            }
+        });
     </script>
 </body>
 </html>
