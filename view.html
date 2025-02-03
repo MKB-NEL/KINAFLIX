@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="movie-title">Ibisobanuro by'Filime</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Comfortaa', sans-serif;
+            background-color: #141414;
+            color: #e5e5e5;
+            text-align: center;
+            padding: 20px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            transition: background 0.3s ease, backdrop-filter 0.3s ease, transform 0.3s ease;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-family: 'Comfortaa', sans-serif;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #e50914;
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: contain;
+        }
+
+        .movie-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 800px;
+            margin: 120px auto 20px auto;
+            background-color: rgba(28, 28, 28, 0.8);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .movie-details img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+        }
+
+        .movie-info-wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .movie-stats,
+        .movie-info {
+            padding: 20px;
+            text-align: left;
+            background-color: rgba(28, 28, 28, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .movie-info h1 {
+            font-size: 2rem;
+            margin: 0 0 10px 0;
+            color: #e50914;
+        }
+
+        .movie-info p {
+            color: #b0b0b0;
+            margin: 5px 0;
+        }
+
+        .back-button, .trailer-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #e50914;
+            color: white;
+            border: none;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+
+        .back-button:hover, .trailer-button:hover {
+            background-color: #ff1e1e;
+        }
+
+        .actors-section {
+            background-color: rgba(28, 28, 28, 0.8);
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+            backdrop-filter: blur(10px);
+        }
+
+        .actors-section h2 {
+            font-size: 1.8rem;
+            color: #e50914;
+            margin-bottom: 10px;
+        }
+
+        .actors-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .actor {
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .actor img {
+            width: 100%;
+            height: auto;
+        }
+
+        .actor-name {
+            margin-top: 5px;
+            font-size: 1rem;
+            color: #e5e5e5;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4); /* Lower opacity for better effect */
+            backdrop-filter: blur(0px); /* Adjust the blur strength */
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            background-color: #1c1c1c;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        iframe {
+            width: 100%;
+            height: 315px;
+        }
+
+        /* Footer Styles */
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #b0b0b0;
+            text-align: center;
+            border-top: 1px solid #333;
+            backdrop-filter: blur(10px);
+        }
+
+        footer a {
+            color: #e50914;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 600px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .logo {
+                margin-bottom: 10px;
+            }
+
+            .movie-info-wrapper {
+                flex-direction: column;
+            }
+
+            .movie-stats,
+            .movie-info {
+                padding: 10px;
+            }
+
+            .actors-list {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .actor {
+                min-width: 100%;
+                max-width: 100%;
+            }
+
+            .modal-content {
+                width: 90%;
+            }
+
+            iframe {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <header class="header" id="header">
+        <div class="logo">KINAFLIX</div>
+        <img src="https://i.pinimg.com/736x/3f/94/70/3f9470b34a8e3f526dbdb022f9f19cf7.jpg" alt="Profile" class="profile-pic">
+    </header>
+
+    <div class="content">
+        <div class="movie-details">
+            <img id="poster" src="" alt="Ishusho ya Filime">
+            <div class="movie-info-wrapper">
+                <div class="movie-stats">
+                    <p><strong>Impuzandengo y'itora:</strong> <span id="vote-average"></span></p>
+                    <p><strong>Amajwi yabazwe:</strong> <span id="vote-count"></span></p>
+                    <p><strong>Igihe:</strong> <span id="runtime"></span> min</p>
+                    <p><strong>Ubwoko:</strong> <span id="genres"></span></p>
+                </div>
+                <div class="movie-info">
+                    <h1 id="title"></h1>
+                    <p><strong>Itariki yo gusohoka:</strong> <span id="release-date"></span></p>
+                    <p><strong>Incamake:</strong></p>
+                    <p id="overview"></p>
+                    <a href="index.html" class="back-button">Gusubira muri filime</a>
+                    <button class="trailer-button" id="trailer-button">Reba Trailer</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="actors-section">
+            <h2>Abakinnyi</h2>
+            <div class="actors-list" id="actors-list"></div>
+        </div>
+
+        <div id="trailerModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2 style="color: #e50914;">Trailer</h2>
+                <iframe id="trailer" src="" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 KINAFLIX | by btem | Uburenganzira bwose burabitswe.</p>
+        <p>Dukurikirane kuri <a href="https://www.instagram.com" style="color: #e50914;">Instagram</a></p>
+    </footer>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const movieId = params.get('id');
+
+        async function fetchMovieDetails(id) {
+            const apiKey = 'aa3d6961efc3b487425daf0ec9f464f0';
+            const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=rw`);
+            const movie = await response.json();
+            displayMovieDetails(movie);
+            displayMovieStats(movie);
+            fetchActors(id);
+            document.body.style.backgroundImage = `url(https://image.tmdb.org/t/p/original${movie.poster_path})`;
+        }
+
+        function displayMovieDetails(movie) {
+            document.getElementById('poster').src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+            document.getElementById('title').innerText = movie.title;
+            document.getElementById('release-date').innerText = movie.release_date;
+            document.getElementById('overview').innerText = movie.overview;
+            document.title = movie.title;
+        }
+
+        function displayMovieStats(movie) {
+            document.getElementById('vote-average').innerText = movie.vote_average;
+            document.getElementById('vote-count').innerText = movie.vote_count;
+            document.getElementById('runtime').innerText = movie.runtime;
+            document.getElementById('genres').innerText = movie.genres.map(genre => genre.name).join(', ');
+        }
+
+        async function fetchActors(id) {
+            const apiKey = 'aa3d6961efc3b487425daf0ec9f464f0';
+            const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${apiKey}&language=rw`);
+            const data = await response.json();
+            displayActors(data.cast);
+        }
+
+        function displayActors(actors) {
+            const actorsList = document.getElementById('actors-list');
+            actorsList.innerHTML = '';
+
+            actors.slice(0, 10).forEach(actor => {
+                const actorDiv = document.createElement('div');
+                actorDiv.classList.add('actor');
+                actorDiv.innerHTML = `
+                    <img src="${actor.profile_path ? "https://image.tmdb.org/t/p/w500" + actor.profile_path : "https://via.placeholder.com/150"}" alt="${actor.name}">
+                    <div class="actor-name">${actor.name}</div>
+                `;
+                actorsList.appendChild(actorDiv);
+            });
+        }
+
+        async function fetchTrailer(id) {
+            const apiKey = 'aa3d6961efc3b487425daf0ec9f464f0';
+            const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}&language=rw`);
+            const data = await response.json();
+            const trailer = data.results.find(video => video.type === 'Trailer');
+
+            if (trailer) {
+                document.getElementById('trailer').src = `https://www.youtube.com/embed/${trailer.key}`;
+                document.getElementById('trailerModal').style.display = 'block';
+            } else {
+                alert('Trailer ntihari');
+            }
+        }
+
+        document.getElementById('trailer-button').addEventListener('click', () => fetchTrailer(movieId));
+
+        var modal = document.getElementById("trailerModal");
+        var span = document.getElementsByClassName("close")[0];
+
+        span.onclick = function() {
+            modal.style.display = "none";
+            document.getElementById('trailer').src = '';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+                document.getElementById('trailer').src = '';
+            }
+        }
+
+        fetchMovieDetails(movieId);
+    </script>
+</body>
+</html>
